@@ -1,0 +1,27 @@
+{
+  "name": "graphql-chat",
+  "version": "0.0.1",
+  "description": "Full stack MongoDB-GraphQL-ReactJS chat.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "babel-node src/index.js"
+  },
+  "author": "Roberto Martínez Medina",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^1.3.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "graphql": "^0.13.1",
+    "graphql-subscriptions": "^0.5.8",
+    "graphql-tag": "^2.8.0",
+    "graphql-tools": "^2.21.0",
+    "mongoose": "^5.0.6",
+    "subscriptions-transport-ws": "^0.9.6"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
