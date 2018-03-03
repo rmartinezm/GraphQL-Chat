@@ -25,12 +25,16 @@ export default {
         createChatRoom: async (parent, { name }, { ChatRoom }) => {
             let chatRoom = new ChatRoom();
             chatRoom.name = name;
-            return await chatroom.save();
+            chatRoom = await chatRoom.save();
+            pubsub.publish('chatRoomAdded', { chatRoomAdded: chatRoom });
+            return chatRoom;
         },
         removeChatRoom: async (parent, { id }, { ChatRoom }) => {
             let chatRoom = await ChatRoom.findOne({'_id': id}).catch(err => null);
             if (chatRoom == null) return null;
-            return await chatRoom.remove();
+            chatRoom = await chatRoom.remove();
+            pubsub.publish('chatRoomRemoved', { chatRoomRemoved: chatRoom });
+            return chatRoom;
         },
         addUserToChatRoom: async (parent, { userId, chatRoomId }, { ChatRoom }) => {
             let chatRoom = await ChatRoom.findOne({'_id': chatRoomId}).catch(err => null);
@@ -62,6 +66,12 @@ export default {
         },
     },
     Subscription: {
+        chatRoomAdded: {
+            subscribe: () => pubsub.asyncIterator('chatRoomAdded')
+        },
+        chatRoomRemoved: {
+            subscribe: () => pubsub.asyncIterator('chatRoomRemoved')
+        },
         userAddedToThisChatRoom: {
             subscribe: withFilter( () => pubsub.asyncIterator('userAddedToThisChatRoom'), (payload, variables) => {
                 console.log(payload);

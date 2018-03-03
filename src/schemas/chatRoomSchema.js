@@ -23,6 +23,8 @@ export default `
     }
 
     type Subscription {
+        chatRoomAdded: ChatRoom!
+        chatRoomRemoved: ChatRoom!
         userAddedToThisChatRoom(chatRoomId:String!): String!
         userRemovedFromThisChatRoom(chatRoomId:String!): String!
         chatAddedToThisChatRoom(chatRoomId:String!): String!
